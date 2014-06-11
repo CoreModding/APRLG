@@ -3,13 +3,21 @@
  */
 package info.coremodding.aprlg.block;
 
+import static net.minecraftforge.common.util.ForgeDirection.EAST;
+import static net.minecraftforge.common.util.ForgeDirection.NORTH;
+import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
+import static net.minecraftforge.common.util.ForgeDirection.WEST;
 import info.coremodding.aprlg.tileentity.TileEntityRPLG;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * @author ethan
@@ -55,5 +63,33 @@ public class BlockPRLG extends BlockContainer {
 			}
 		}
 	}
+	
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack)
+    {
+        int yRotation = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int i1 = world.getBlockMetadata(x, y, z) >> 2;
+        ++yRotation;
+        yRotation %= 4;
+
+        if (yRotation == 0)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 2 | i1 << 2, 2);
+        }
+
+        if (yRotation == 1)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 3 | i1 << 2, 2);
+        }
+
+        if (yRotation == 2)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 0 | i1 << 2, 2);
+        }
+
+        if (yRotation == 3)
+        {
+            world.setBlockMetadataWithNotify(x, y, z, 1 | i1 << 2, 2);
+        }
+    }
 
 }
