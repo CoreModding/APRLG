@@ -18,13 +18,13 @@ public class Reference {
 		 * rc - Release Candidate. Very little bugs. Mechanics won't change much. World reset may be required.</br>
 		 * s - Stable. Very little bugs. Mechnics won't change much. No world reset needed unless there is an MC update.</br>
 		 */
-		public static final String VERSION = "0.1.0-α-000";
+		public static final String VERSION = "1.0.0-α-000";
 		
 		public static final String MC_VERSION = "1.7.2";
 	}
 	
 	public class Proxy {
-		public static final String COMMON_PROXY = "nxsupert.aprlg.proxy.CommonProxy";
-		public static final String CLIENT_PROXY = "nxsupert.aprlg.proxy.CleintProxy";
+		public static final String COMMON_PROXY = "info.coremodding.aprlg.proxy.CommonProxy";
+		public static final String CLIENT_PROXY = "info.coremodding.aprlg.proxy.CleintProxy";
 	}
 }
