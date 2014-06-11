@@ -20,7 +20,6 @@ public class APRLG {
 	public void preInitialization(FMLPreInitializationEvent preEvent) {
 		ModBlocks.regBlocks();
 		ModTileEntities.regTileEntities();
-		System.out.println(System.getProperty("java.library.path"));
 	}
 	
 	@EventHandler

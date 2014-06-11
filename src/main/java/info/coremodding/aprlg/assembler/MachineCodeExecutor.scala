@@ -1,6 +1,7 @@
 package info.coremodding.aprlg.assembler
 
 import info.coremodding.aprlg.tileentity.TileEntityRPLG
+import info.coremodding.aprlg.util.BlockUtils
 
 object MachineCodeExecutor {
 	def runMachineCode(rplg: TileEntityRPLG) {
@@ -11,12 +12,33 @@ object MachineCodeExecutor {
 	  val x = rplg.xCoord
 	  val y = rplg.yCoord
 	  val z = rplg.zCoord
+	  val metaData = rplg.getBlockMetadata()
 	  val redstoneDown =  world.isBlockProvidingPowerTo(x, y - 1, z, 0);
 	  val redstoneUp =  world.isBlockProvidingPowerTo(x, y + 1, z, 1);
-	  val redstoneZN =  world.isBlockProvidingPowerTo(x, y, z - 1, 2);
-	  val redstoneZP =  world.isBlockProvidingPowerTo(x, y, z + 1, 3);
-	  val redstoneXN =  world.isBlockProvidingPowerTo(x - 1, y, z, 4);
-	  val redstoneXP =  world.isBlockProvidingPowerTo(x + 1, y, z, 5);
+	  val redstoneFront =  BlockUtils.isBeingPoweredByBlockToSide(
+	      BlockUtils.getDirectionFromSideAndRotation(
+	          BlockUtils.front, 
+	          metaData),
+	          world,
+	          x, y, z)
+	   val redstoneRight =  BlockUtils.isBeingPoweredByBlockToSide(
+	      BlockUtils.getDirectionFromSideAndRotation(
+	          BlockUtils.right, 
+	          metaData),
+	          world,
+	          x, y, z)
+	    val redstoneBack =  BlockUtils.isBeingPoweredByBlockToSide(
+	      BlockUtils.getDirectionFromSideAndRotation(
+	          BlockUtils.back, 
+	          metaData),
+	          world,
+	          x, y, z)
+	     val redstoneLeft =  BlockUtils.isBeingPoweredByBlockToSide(
+	      BlockUtils.getDirectionFromSideAndRotation(
+	          BlockUtils.left, 
+	          metaData),
+	          world,
+	          x, y, z)
          
                     
     

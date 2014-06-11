@@ -22,7 +22,7 @@ object BlockUtils {
 		return	(side + rotation) % 4
 	}
 	
-	def isBeingPoweredByBlockToThe(side: Int, world: World, x: Int, y: Int, z: Int): Int = {
+	def isBeingPoweredByBlockToSide(side: Int, world: World, x: Int, y: Int, z: Int): Int = {
 	  side match {
 	    case ZP => world.isBlockProvidingPowerTo(x, y, z + 1, 3);
 	    case ZN => world.isBlockProvidingPowerTo(x, y, z - 1, 2);
