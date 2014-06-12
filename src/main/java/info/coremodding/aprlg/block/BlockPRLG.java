@@ -3,31 +3,33 @@
  */
 package info.coremodding.aprlg.block;
 
-import static net.minecraftforge.common.util.ForgeDirection.EAST;
-import static net.minecraftforge.common.util.ForgeDirection.NORTH;
-import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.util.ForgeDirection.WEST;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import info.coremodding.aprlg.references.Reference;
 import info.coremodding.aprlg.tileentity.TileEntityRPLG;
+import info.coremodding.aprlg.util.BlockUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author ethan
  *
  */
 public class BlockPRLG extends BlockContainer {
-
+	
+	private IIcon[] textures;
+	
 	protected BlockPRLG() {
 		super(Material.iron);
 		// TODO Auto-generated constructor stub
@@ -70,34 +72,42 @@ public class BlockPRLG extends BlockContainer {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack)
     {
         int yRotation = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        ++yRotation;
+        //++yRotation;
         yRotation %= 4;
+        
+        world.setBlockMetadataWithNotify(x, y, z, yRotation, 2);
 
-        if (yRotation == 0)
-        {
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-        }
+        
+    }
+	
+	
+	@SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
+    {
+        this.textures = new IIcon[5];
 
-        if (yRotation == 1)
+        for (int i = 0; i < this.textures.length; ++i)
         {
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        }
-
-        if (yRotation == 2)
-        {
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        }
-
-        if (yRotation == 3)
-        {
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+            //this.textures[i] = iconRegister.registerIcon(Reference.Mod.ID +":textures/blocks/prlg" + "_" + i);
+        	this.textures[i] = iconRegister.registerIcon(Reference.Mod.ID +":"+ "prlg" + "_" + i);
         }
     }
 	
-	/* @SideOnly(Side.CLIENT)
-	    public IIcon getIcon(int side, int meta)
-	    {
-		 
-	    }*/
+	 @SideOnly(Side.CLIENT)
+	 public IIcon getIcon(int side, int meta)
+	 {	
+		int fourPointSide = BlockUtils.sixPointDirToFourPointDir(side);
+		
+		if(fourPointSide == BlockUtils.unknown()) {
+			return textures[4];
+		} else {
+			return textures[BlockUtils.getSideFromDirectionAndRotation(fourPointSide, meta)];
+		}
+		/* if(BlockUtils.sixPointDirToFourPointDir(side) == meta) {
+			 return Blocks.redstone_block.getIcon(0, 0);
+		 } else {
+			 return Blocks.quartz_block.getIcon(0, 0);
+		 }*/
+	 }
 
 }
