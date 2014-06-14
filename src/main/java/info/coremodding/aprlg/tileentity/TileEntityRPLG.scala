@@ -9,6 +9,7 @@ import info.coremodding.aprlg.util.BookUtils
 import info.coremodding.aprlg.assembler.AssemblerUtils
 import net.minecraft.util.IChatComponent
 import net.minecraft.util.ChatComponentText
+import info.coremodding.aprlg.util.BlockUtils
 
 class TileEntityRPLG extends TileEntity {
 
@@ -26,6 +27,7 @@ class TileEntityRPLG extends TileEntity {
  }
 
   override def writeToNBT(nbt: NBTTagCompound) {
+    super.writeToNBT(nbt);
     nbt.setByteArray("machineCode", machineCode)
     nbt.setByte("stack", ByteUtils.byteFromBooleanArray(stack))
     nbt.setByte("stackPos", stackPos)
@@ -48,6 +50,10 @@ class TileEntityRPLG extends TileEntity {
 	  player.addChatMessage(new ChatComponentText("Code: " + ByteUtils.usignedByteArrayToHexString(machineCode)))
 	  player.addChatMessage(new ChatComponentText("Stack: " + ByteUtils.usignedByteArrayToBinString(Array(ByteUtils.byteFromBooleanArray(stack)) ) ) )
 	  player.addChatMessage(new ChatComponentText("StackPos: " + stackPos))
+	  
+	  val rotation = this.getBlockMetadata();
+	  
+	  val pfromFront = BlockUtils.ge
 	
   }
 

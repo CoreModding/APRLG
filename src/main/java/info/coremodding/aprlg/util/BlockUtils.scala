@@ -33,8 +33,8 @@ object BlockUtils {
 	  side match {
 	    case ZP => world.isBlockProvidingPowerTo(x, y, z + 1, 3);
 	    case ZN => world.isBlockProvidingPowerTo(x, y, z - 1, 2);
-	    case XP => world.isBlockProvidingPowerTo(x, y, z + 1, 5);
-	    case XN => world.isBlockProvidingPowerTo(x, y, z - 1, 4);
+	    case XP => world.isBlockProvidingPowerTo(x + 1, y, z, 5);
+	    case XN => world.isBlockProvidingPowerTo(x - 1, y, z, 4);
 	  } 
 	}
 	
